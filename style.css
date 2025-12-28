@@ -614,3 +614,902 @@ section { min-height: 100vh; padding: 10rem 10% 2rem; }
     object-fit: cover; /* Penting! Agar gambar tidak gepeng/lonjong */
     object-position: center; /* Memastikan wajah tetap di tengah */
 }
+
+/* --- RESPONSIVE 3D ADJUSTMENT --- */
+
+/* Pengaturan untuk Tablet & HP */
+@media (max-width: 991px) {
+    .home {
+        flex-direction: column-reverse; /* Gambar di atas, teks di bawah */
+        justify-content: center;
+        gap: 2rem;
+        padding-top: 8rem;
+    }
+
+    .home-content {
+        padding: 25px;
+        text-align: center;
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .home-img .glowing-circle {
+        width: 280px;
+        height: 280px;
+    }
+}
+
+/* Pengaturan khusus HP Layar Kecil */
+@media (max-width: 480px) {
+    .home-content h1 {
+        font-size: 3.5rem; /* Teks lebih kecil agar tidak pecah */
+    }
+
+    .home-content p {
+        font-size: 1.4rem;
+    }
+
+    .btn-box {
+        flex-direction: column; /* Tombol jadi atas-bawah di HP */
+        gap: 1rem;
+    }
+
+    .home-img .glowing-circle {
+        width: 220px;
+        height: 220px;
+    }
+}
+
+/* Memperbaiki Navigasi Mobile agar Transparan & Estetik */
+@media (max-width: 768px) {
+    .navbar {
+        background: rgba(8, 27, 41, 0.95);
+        backdrop-filter: blur(15px);
+        border-left: 2px solid var(--main-color);
+    }
+}
+/* --- EFEK 3D & GLASSMORPHISM --- */
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Perspektif pada Body untuk efek 3D */
+body {
+    perspective: 1000px;
+}
+
+/* Kotak Konten Berbasis Glassmorphism */
+.home-content {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+    transform-style: preserve-3d; /* Penting untuk 3D */
+    transition: 0.5s ease;
+}
+
+/* Efek Gambar 3D yang Bergerak */
+.home-img {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: 0.5s ease;
+}
+
+.home-img .image-box {
+    transform: translateZ(50px); /* Membuat gambar seolah melayang di depan lingkaran */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* Animasi Background Partikel Sederhana */
+.home::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background-image: radial-gradient(var(--main-color) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.1;
+    z-index: -1;
+    animation: moveBg 20s linear infinite;
+}
+
+@keyframes moveBg {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
+}
+
+/* Hover Effect 3D */
+.home-content:hover {
+    transform: rotateX(5deg) rotateY(-5deg);
+    border: 1px solid var(--main-color);
+}
+
+/* Container Utama Konten 3D */
+.home-content {
+    position: relative;
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    padding: 50px;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    display: flex;
+    flex-direction: column; /* Susun ke bawah */
+    align-items: center;    /* Rata tengah horizontal */
+    justify-content: center; /* Rata tengah vertikal */
+    text-align: center;
+    width: 550px;           /* Lebar kotak dibuat tetap agar presisi */
+    min-height: 400px;
+    transform-style: preserve-3d;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+}
+
+/* Memastikan Teks Animasi Presisi di Tengah Kotak */
+.text-animate-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+/* --- PENYESUAIAN KHUSUS MOBILE (RESPONSIVE) --- */
+@media (max-width: 991px) {
+    .home {
+        height: auto;           /* Melepaskan tinggi kaku 100vh */
+        min-height: 100vh;      /* Tetap memenuhi layar minimal */
+        display: flex;
+        flex-direction: column; /* Gambar di atas, Teks di bawah */
+        justify-content: center;
+        align-items: center;
+        padding: 10rem 5% 5rem; /* Padding atas lebih besar agar tidak tertutup Navbar */
+        gap: 4rem;              /* Memberi jarak antara gambar dan kotak 3D */
+    }
+
+    .home-content {
+        width: 100%;            /* Kotak melebar mengikuti layar HP */
+        max-width: 400px;       /* Tapi tidak terlalu lebar agar tetap estetik */
+        padding: 3rem 2rem;
+        order: 2;               /* Memastikan teks di bawah gambar */
+    }
+
+    .home-img {
+        order: 1;               /* Memastikan gambar di atas teks */
+        margin-top: 2rem;
+    }
+
+    .home-img .glowing-circle {
+        width: 250px;           /* Perkecil ukuran lingkaran di HP */
+        height: 250px;
+    }
+
+    .text-animate {
+        font-size: 2.5rem;      /* Perkecil ukuran teks animasi di HP */
+    }
+}
+
+@media (max-width: 480px) {
+    .home {
+        padding-top: 12rem;     /* Jarak extra di layar sangat kecil */
+    }
+    
+    .home-content h1 {
+        font-size: 3rem;
+    }
+    
+    .btn-group-3d {
+        flex-direction: column; /* Tombol jadi atas-bawah agar tidak sempit */
+        width: 100%;
+    }
+    
+    .btn-music, .btn-group-3d .btn {
+        width: 100%;            /* Tombol full width di HP */
+    }
+}
+/* --- PENGATURAN SKALA GLOBAL --- */
+
+/* Standar Desktop */
+html {
+    font-size: 62.5%; /* 1rem = 10px */
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* Tablet (Kecilkan sedikit) */
+@media (max-width: 991px) {
+    html {
+        font-size: 55%; /* Semua elemen mengecil otomatis */
+    }
+}
+
+/* HP (Kecilkan agar terlihat jelas dan compact) */
+@media (max-width: 480px) {
+    html {
+        font-size: 45%; /* Ukuran ideal agar konten terlihat mungil tapi tajam */
+    }
+
+    /* Mengatur agar semua section tidak terlalu sesak */
+    section {
+        padding: 8rem 3% 4rem !important; 
+    }
+
+    .heading {
+        font-size: 3.5rem !important; /* Judul section tidak terlalu mendominasi */
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Home Content: Buat kotak 3D lebih ramping */
+    .home-content {
+        padding: 2rem !important;
+        width: 95% !important;
+        min-height: auto !important;
+    }
+
+    /* Gambar: Jangan terlalu besar agar tidak memenuhi layar */
+    .home-img .glowing-circle {
+        width: 180px !important;
+        height: 180px !important;
+    }
+
+    /* Skills: Buat progress bar lebih tipis */
+    .skills-box {
+        padding: 1rem !important;
+    }
+
+    .skills-content .progress .bar {
+        height: 1.8rem !important;
+    }
+
+    /* Contact: Pastikan input tidak terlalu tinggi */
+    .contact form .input-box .input-field input,
+    .contact form .textarea-field textarea {
+        padding: 1rem !important;
+        font-size: 1.4rem !important;
+    }
+
+    /* Footer: Kecilkan teks copyright */
+    .footer-text p {
+        font-size: 1.2rem !important;
+    }
+}
+/* Memastikan Tombol Berada di Tengah Kotak */
+.btn-group-3d {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 3rem;
+    width: 100%;
+    transform: translateZ(40px); /* Tombol paling depan agar mudah diklik */
+}
+
+/* Mengatur ukuran tombol agar seragam */
+.btn-music, .btn-group-3d .btn {
+    min-width: 160px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* Responsif HP: Kotak menyesuaikan lebar layar */
+@media (max-width: 768px) {
+    .home-content {
+        width: 90%; 
+        padding: 30px 20px;
+        min-height: auto;
+    }
+    
+    .btn-group-3d {
+        flex-direction: column; /* Tombol tumpuk di HP agar tidak sempit */
+        gap: 1.5rem;
+    }
+}
+
+/* --- STYLING IKON SOSMED UNTUK HP --- */
+@media (max-width: 480px) {
+    .social-icons {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        gap: 2.5rem; /* Jarak antar ikon lebih lebar agar tidak salah klik */
+        margin-top: 3rem;
+        z-index: 100; /* Memastikan di atas elemen background */
+    }
+
+    .social-icons a {
+        width: 5rem;  /* Ukuran lingkaran lebih besar (50px) */
+        height: 5rem;
+        font-size: 2.5rem; /* Ukuran logo di dalam lebih besar */
+        background: rgba(0, 171, 240, 0.1); /* Background tipis agar terlihat batasnya */
+        border: .2rem solid var(--main-color);
+        box-shadow: 0 0 1rem var(--main-color); /* Efek glow agar menonjol */
+        transition: .3s;
+    }
+
+    /* Efek saat jari menyentuh ikon (Tap Effect) */
+    .social-icons a:active {
+        background: var(--main-color);
+        color: var(--bg-color);
+        transform: scale(1.2); /* Membesar sedikit saat ditekan */
+    }
+}
+
+/* Jika sosmed tenggelam di bawah kotak 3D, tambahkan ini pada home-content */
+.home-content {
+    z-index: 10;
+}
+   
+   /* --- TAMPILAN DESKTOP (DEFAULT) --- */
+.about {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10rem; /* Jarak lebar antara gambar dan teks di desktop */
+    background: var(--second-bg-color);
+}
+
+.about-img {
+    position: relative;
+    width: 35rem; /* Ukuran gambar cukup besar di desktop */
+    height: 35rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-content {
+    flex: 1; /* Mengambil sisa ruang agar teks terlihat luas */
+}
+
+.about-content h2 {
+    text-align: left;
+    line-height: 1.2;
+}
+
+.about-content p {
+    font-size: 1.6rem; /* Ukuran teks nyaman dibaca di layar lebar */
+    margin: 2rem 0 3rem;
+}
+
+/* --- TAMPILAN HP (RESPONSIVE) --- */
+@media (max-width: 768px) {
+    .about {
+        flex-direction: column; /* Gambar di atas, teks di bawah */
+        text-align: center;
+        gap: 4rem;
+        padding: 5rem 5%;
+    }
+
+    .about-img {
+        width: 22rem; /* Gambar mengecil agar proporsional di layar HP */
+        height: 22rem;
+    }
+
+    .about-content h2 {
+        text-align: center;
+        font-size: 4rem; /* Judul menyesuaikan lebar layar HP */
+    }
+
+    .about-content h3 {
+        font-size: 2.2rem;
+    }
+
+    .about-content p {
+        font-size: 1.4rem; /* Teks sedikit lebih kecil agar compact di HP */
+        margin: 1.5rem 0 2.5rem;
+        text-align: justify; /* Supaya terlihat rapi di layar sempit */
+    }
+
+    .about-content .btn-box {
+        justify-content: center; /* Tombol pindah ke tengah */
+    }
+}
+/* Container Tombol */
+.btn-group-3d {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem; /* Jarak antar tombol */
+    margin-top: 3rem;
+}
+
+/* Styling Dasar Kedua Tombol (Musik & Kontak) */
+.btn-music, 
+.btn-group-3d .btn {
+    position: relative;
+    width: 180px;      /* Lebar disamakan */
+    height: 50px;      /* Tinggi disamakan */
+    background: var(--main-color);
+    border: .2rem solid var(--main-color);
+    border-radius: .8rem;
+    font-size: 1.6rem; /* Ukuran font disamakan */
+    font-weight: 600;
+    color: var(--bg-color);
+    letter-spacing: .1rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;         /* Jarak antara ikon dan teks */
+    transition: .5s;
+    cursor: pointer;
+    z-index: 1;
+    overflow: hidden;
+}
+
+/* Efek Hover untuk Kedua Tombol */
+.btn-music:hover,
+.btn-group-3d .btn:hover {
+    color: var(--main-color);
+    background: transparent;
+    box-shadow: 0 0 2rem var(--main-color);
+}
+
+/* Ikon di dalam tombol */
+.btn-music i, 
+.btn-group-3d .btn i {
+    font-size: 2.2rem; /* Ukuran ikon disamakan */
+}
+
+/* Responsif untuk HP */
+@media (max-width: 480px) {
+    .btn-group-3d {
+        flex-direction: column; /* Tumpuk ke bawah di HP */
+        gap: 1.5rem;
+        width: 100%;
+    }
+
+    .btn-music, 
+    .btn-group-3d .btn {
+        width: 100%;     /* Di HP tombol melebar penuh agar mudah diklik */
+        height: 55px;    /* Sedikit lebih tinggi untuk kenyamanan jempol */
+        font-size: 1.8rem; /* Teks sedikit lebih besar agar jelas */
+    }
+}
+/* Container Utama Section Home */
+.home {
+    position: relative;
+    min-height: 100vh;
+    background: #081b29; /* Warna dasar biru gelap Codehal */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+}
+
+/* Container Langit Malam */
+.stars-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gradasi Biru ke Hitam agar bintang terlihat jelas */
+    background: radial-gradient(circle at top, #0a2a43 0%, #081b29 100%);
+    z-index: -1; /* Pastikan di belakang teks */
+}
+
+/* --- SUPER BRIGHT STARS EFFECT --- */
+
+.stars-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: #081b29; /* Dasar Biru Tua Codehal */
+}
+
+#stars-bright, #stars-glow, #stars-neon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+}
+
+/* Layer 1: Titik Putih Tajam (Paling Terang) */
+#stars-bright {
+    width: 1.5px;
+    height: 1.5px;
+    box-shadow: 
+        10vw 20vh #fff, 30vw 50vh #fff, 70vw 15vh #fff, 
+        90vw 80vh #fff, 50vw 40vh #fff, 15vw 90vh #fff,
+        85vw 10vh #fff, 65vw 70vh #fff;
+    /* Efek kilauan tajam */
+    filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px #fff);
+    animation: superTwinkle 3s ease-in-out infinite;
+}
+
+/* Layer 2: Bintang Cyan (Efek Neon) */
+#stars-glow {
+    width: 2.5px;
+    height: 2.5px;
+    box-shadow: 
+        20vw 35vh #00abf0, 45vw 15vh #00abf0, 
+        80vw 60vh #00abf0, 10vw 75vh #00abf0,
+        55vw 90vh #00abf0;
+    filter: drop-shadow(0 0 8px #00abf0) drop-shadow(0 0 15px #00abf0);
+    animation: superTwinkle 5s ease-in-out infinite alternate;
+}
+
+/* Layer 3: Bintang Besar dengan Aura (Bloom Effect) */
+#stars-neon {
+    width: 3.5px;
+    height: 3.5px;
+    box-shadow: 
+        25vw 75vh #fff, 75vw 25vh #fff, 50vw 50vh #00abf0;
+    filter: drop-shadow(0 0 12px #fff) drop-shadow(0 0 25px #00abf0);
+    animation: superTwinkle 4s ease-in-out infinite;
+}
+
+/* Animasi Kelap-kelip yang Agresif */
+@keyframes superTwinkle {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(0.8) rotate(0deg);
+        filter: brightness(1) drop-shadow(0 0 5px #00abf0);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.3) rotate(45deg);
+        /* Efek Ledakan Cahaya */
+        filter: brightness(2) drop-shadow(0 0 20px #fff) drop-shadow(0 0 40px #00abf0);
+    }
+}
+/* --- BULAN BERSINAR ALA CODEHAL --- */
+.moon {
+    position: absolute;
+    top: 10%;        /* Posisi dari atas */
+    right: 10%;      /* Posisi dari samping */
+    width: 100px;
+    height: 100px;
+    background: #fff; /* Warna dasar putih murni */
+    border-radius: 50%;
+    z-index: 1;
+    
+    /* Efek Pendaran Cahaya Biru (Neon Glow) */
+    box-shadow: 
+        0 0 20px #fff,            /* Cahaya dalam putih */
+        0 0 50px #00abf0,         /* Pendaran biru cyan */
+        0 0 80px rgba(0, 171, 240, 0.6), 
+        0 0 120px rgba(0, 171, 240, 0.3);
+        
+    /* Animasi Mengambang (Floating Effect) */
+    animation: moonFloat 5s ease-in-out infinite;
+}
+
+/* Tekstur Bayangan di Dalam Bulan agar terlihat 3D */
+.moon::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100%;
+    height: 100%;
+    background: #081b29; /* Warna yang sama dengan background */
+    border-radius: 50%;
+    opacity: 0.1; /* Sangat tipis sebagai bayangan kawah */
+}
+
+/* Animasi Bulan Naik-Turun Pelan */
+@keyframes moonFloat {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-15px) scale(1.05);
+    }
+}
+
+/* Penyesuaian Mobile */
+@media (max-width: 768px) {
+/* --- BULAN BERSINAR ALA CODEHAL --- */
+.moon {
+    position: absolute;
+    top: 10%;        /* Posisi dari atas */
+    right: 10%;      /* Posisi dari samping */
+    width: 100px;
+    height: 100px;
+    background: #fff; /* Warna dasar putih murni */
+    border-radius: 50%;
+    z-index: 1;
+    
+    /* Efek Pendaran Cahaya Biru (Neon Glow) */
+    box-shadow: 
+        0 0 20px #fff,            /* Cahaya dalam putih */
+        0 0 50px #00abf0,         /* Pendaran biru cyan */
+        0 0 80px rgba(0, 171, 240, 0.6), 
+        0 0 120px rgba(0, 171, 240, 0.3);
+        
+    /* Animasi Mengambang (Floating Effect) */
+    animation: moonFloat 5s ease-in-out infinite;
+}
+
+/* Tekstur Bayangan di Dalam Bulan agar terlihat 3D */
+.moon::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100%;
+    height: 100%;
+    background: #081b29; /* Warna yang sama dengan background */
+    border-radius: 50%;
+    opacity: 0.1; /* Sangat tipis sebagai bayangan kawah */
+}
+
+/* Animasi Bulan Naik-Turun Pelan */
+@keyframes moonFloat {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-15px) scale(1.05);
+    }
+}
+
+/* Penyesuaian Mobile */
+@media (max-width: 768px) {
+    .moon {
+        background: transparent;
+    box-shadow: 15px 10px 0 0 #fff, 0 0 30px #00abf0;
+    }
+}
+
+
+/* Area Preview Buku */
+.book-preview {
+    height: 200px;
+    background: rgba(0, 171, 240, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.book-preview i {
+    font-size: 8rem;
+    color: var(--main-color);
+    filter: drop-shadow(0 0 10px var(--main-color));
+}
+
+/* Hover Overlay untuk "Baca Sekarang" */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(8, 27, 41, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: .3s;
+}
+
+.book-card:hover .overlay {
+    opacity: 1;
+}
+
+.view-btn {
+    padding: 1rem 2rem;
+    background: var(--main-color);
+    color: var(--bg-color);
+    font-weight: 600;
+    border-radius: .8rem;
+    font-size: 1.4rem;
+}
+
+/* Info Buku */
+.book-info {
+    padding: 2rem;
+}
+
+.book-info h3 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+}
+
+.book-info p {
+    font-size: 1.4rem;
+    color: #ccc;
+    line-height: 1.6;
+}
+
+.book-footer {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+}
+
+.book-footer span {
+    font-size: 1.2rem;
+    color: var(--main-color);
+}
+
+.book-footer i {
+    font-size: 2.2rem;
+    color: var(--main-color);
+    cursor: pointer;
+    transition: .3s;
+}
+
+.book-footer i:hover {
+    transform: scale(1.2);
+}
+/* --- E-BOOK SECTION (DESKTOP & MOBILE) --- */
+.ebook-section {
+    padding: 100px 7% 100px;
+    background: transparent;
+}
+
+.heading {
+    text-align: center;
+    font-size: 4.5rem;
+    margin-bottom: 5rem;
+    color: #fff;
+}
+
+.heading span {
+    color: var(--main-color);
+}
+
+.ebook-container {
+    display: grid;
+    /* DI DESKTOP: Otomatis membuat kolom (min 300px) */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 3rem;
+    max-width: 1200px; /* Batas lebar di Desktop agar tidak terlalu lebar */
+    margin: 0 auto;
+}
+
+.ebook-card {
+    background: rgba(17, 46, 66, 0.4);
+    border: .2rem solid rgba(0, 171, 240, 0.2);
+    border-radius: 2.5rem;
+    padding: 3rem;
+    transition: all .4s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+/* Efek Glow di Desktop saat Mouse lewat */
+.ebook-card:hover {
+    transform: translateY(-1.5rem);
+    border-color: var(--main-color);
+    box-shadow: 0 0 30px rgba(0, 171, 240, 0.4);
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+.card-top i {
+    font-size: 7rem;
+    color: var(--main-color);
+    filter: drop-shadow(0 0 10px var(--main-color));
+}
+
+.badge {
+    background: var(--main-color);
+    color: #081b29;
+    padding: .5rem 1.5rem;
+    border-radius: 2rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.card-content h3 {
+    font-size: 2.4rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.card-content p {
+    font-size: 1.5rem;
+    color: #ccc;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+}
+
+.card-action {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.btn-read {
+    flex: 1;
+    padding: 1.2rem;
+    background: var(--main-color);
+    color: #081b29;
+    text-align: center;
+    border-radius: 1rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+    transition: .3s;
+}
+
+.btn-read:hover {
+    background: #fff;
+    box-shadow: 0 0 15px #fff;
+}
+
+.btn-dl {
+    width: 4.5rem;
+    height: 4.5rem;
+    border: .2rem solid var(--main-color);
+    color: var(--main-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+    font-size: 2rem;
+    transition: .3s;
+}
+
+.btn-dl:hover {
+    background: var(--main-color);
+    color: #081b29;
+}
+
+/* --- RESPONSIVE MOBILE (HP) --- */
+@media (max-width: 768px) {
+    .ebook-container {
+        grid-template-columns: 1fr; /* 1 kolom penuh di HP */
+        padding: 0 2rem;
+    }
+    
+    .heading {
+        font-size: 3.5rem;
+    }
+
+    .ebook-card {
+        padding: 2.5rem;
+    }
+}
+/* Container Utama */
+.book-preview {
+    perspective: 1000px; /* Memberikan efek kedalaman 3D */
+    height: 350px;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.cover-img {
+    width: 80%; /* Dikecilkan sedikit agar bayangan terlihat */
+    height: 90%;
+    object-fit: cover;
+    border-radius: 2px 10px 10px 2px; /* Sudut kanan lebih bulat, kiri tajam */
+    
+    /* Efek Tulang Buku di Sisi Kiri */
+    border-left: 8px solid rgba(0, 0, 0, 0.4);
+    
+    /* Bayangan agar terlihat seperti buku fisik */
+    box-shadow: 
+        -5px 5px 15px rgba(0, 0, 0, 0.5), 
+        5px 5px 15px rgba(0, 0, 0, 0.2);
+        
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.book-card:hover .cover-img {
+    /* Efek buku terbuka sedikit saat di-hover */
+    transform: rotateY(-15px) scale(1.05);
+}
