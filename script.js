@@ -87,3 +87,94 @@ const revealJourney = () => {
 
 // Panggil fungsi di dalam event scroll
 window.addEventListener('scroll', revealJourney);
+
+// Cek apakah perangkat adalah Mobile
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+if (!isMobile) {
+    // --- JALANKAN EFEK MOUSE TRACKING (DESKTOP) ---
+    home.addEventListener('mousemove', (e) => {
+        let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+        let yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+        content.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        img.style.transform = `rotateY(${-xAxis}deg) rotateX(${-yAxis}deg) translateZ(50px)`;
+    });
+} else {
+    // --- JALANKAN ANIMASI OTOMATIS (MOBILE) ---
+    // Memberikan efek melayang halus tanpa mouse
+    let angle = 0;
+    function autoFloat() {
+        angle += 0.02;
+        const x = Math.sin(angle) * 5;
+        const y = Math.cos(angle) * 5;
+        
+        content.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+        img.style.transform = `rotateY(${-x}deg) rotateX(${-y}deg) translateZ(30px)`;
+        
+        requestAnimationFrame(autoFloat);
+    }
+    autoFloat();
+}
+
+// Gunakan variabel ini untuk membatasi kemiringan agar tidak terlalu ekstrem
+const tiltLimit = 15; 
+
+home.addEventListener('mousemove', (e) => {
+    // Menghitung posisi kursor relatif terhadap tengah layar
+    let x = (window.innerWidth / 2 - e.pageX) / 20;
+    let y = (window.innerHeight / 2 - e.pageY) / 20;
+
+    // Batasi angka rotasi agar presisi
+    let rotateX = Math.max(-tiltLimit, Math.min(tiltLimit, y));
+    let rotateY = Math.max(-tiltLimit, Math.min(tiltLimit, -x));
+
+    content.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    
+    // Efek gambar berlawanan arah agar terlihat mendalam
+    img.style.transform = `rotateX(${-rotateX}deg) rotateY(${-rotateY}deg) translateZ(60px)`;
+});
+
+// Deteksi apakah user menggunakan HP/Layar Sentuh
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+if (!isTouchDevice) {
+    // Jalankan efek Mouse Move 3D hanya untuk Desktop
+    home.addEventListener('mousemove', (e) => {
+        let x = (window.innerWidth / 2 - e.pageX) / 20;
+        let y = (window.innerHeight / 2 - e.pageY) / 20;
+        content.style.transform = `rotateX(${y}deg) rotateY(${-x}deg)`;
+        img.style.transform = `rotateX(${-y}deg) rotateY(${x}deg) translateZ(50px)`;
+    });
+} else {
+    // Untuk HP: Gunakan animasi mengambang otomatis yang sangat halus
+    // agar terlihat hidup tanpa perlu interaksi kursor
+    content.style.transform = "none"; 
+    img.style.animation = "floatMobile 3s ease-in-out infinite";
+}
+
+// Tambahkan CSS Keyframe ini ke file style.css Anda
+/* @keyframes floatMobile {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+*/
+
+const dropZone = document.querySelector('.drop-zone');
+const fileInput = document.querySelector('#fileInput');
+const fileNameDisplay = document.querySelector('#fileName');
+
+// Trigger input file saat area drop-zone diklik
+dropZone.addEventListener('click', () => fileInput.click());
+
+// Tampilkan nama file setelah dipilih
+fileInput.addEventListener('change', () => {
+    if (fileInput.files.length > 0) {
+        fileNameDisplay.textContent = `File terpilih: ${fileInput.files[0].name}`;
+    }
+});
+
+// Simulasi Unggah
+document.getElementById('uploadForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Fitur unggah memerlukan Backend (Server). File "' + fileInput.files[0].name + '" siap dikirim!');
+});
